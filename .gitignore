@@ -19,4 +19,5 @@ node_modules/
 next-mdx/.next
 node_modules/**
 node_modules
-dist/
+dist/src/
+package.json

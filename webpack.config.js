@@ -1,6 +1,4 @@
 const path = require('path');
-const outputpath = path.resolve(__dirname, 'dist');
-const contentBase = path.join(__dirname, 'dist');
 
 module.exports = function() {
   const docCss = require('rehype-decorate');
@@ -11,7 +9,7 @@ module.exports = function() {
       publicPath: '/',
       jsonpScriptType: (string = 'text/javascript'),
       filename: 'app.js',
-      path: outputpath,
+      path: path.resolve(__dirname, './dist/src/'),
     },
     module: {
       rules: [
@@ -71,7 +69,7 @@ module.exports = function() {
       extensions: ['.tsx', '.ts', '.js', '.css', 'png', 'jpg', '.mdx', '.woff', '.woff2', '.eot', '.ttf', '.otf'],
     },
     devServer: {
-      contentBase: contentBase,
+      contentBase: './dist',
       compress: true,
       historyApiFallback: true,
       port: 10721,
