@@ -1,0 +1,14 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import LoginPage from '../src/components/login/loginForm';
+
+<Meta title="Login" component={LoginPage} />
+
+# Beschreibung
+
+Diese Komponente Liefert eine Login Form. Der Anwender kann über EIngabefelder seinen Usernamen und
+sein Passwort angeben. Über einen Button "Login" wird dann Eine API Request mit den angegebenen Daten durchgeführt.
+Ist diese erfolgreich, wird der Anwender weitergeleitet auf die Hauptseite.
+
+<Preview>
+  <Story name="Login">{LoginPage()}</Story>
+</Preview>

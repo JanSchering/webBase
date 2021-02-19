@@ -1,0 +1,82 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import ContentTable from '../../src/components/tables/table';
+
+<Meta title="ContentTableMdx" component={ContentTable} />
+
+# Content Tables
+
+In diesem Abschnitt wird die Verwendung der ContentTable Komponente beschrieben. Es handelt sich dabei um eine React Komponente,
+welche aus einem Array von Spaltenüberschriften und einem Tabellenkorpus eine React-Bootstrap Tabelle zusammensetzt. Dies sieht
+grundlegend aus wie folgend:
+
+export let headers = ['first', 'second'];
+
+export let content = [
+  <tr>
+    <td>first cell</td>
+    <td>another cell</td>
+  </tr>,
+];
+
+<Story name="without Hover">
+  <ContentTable headers={headers} content={content} />
+</Story>
+
+## Den Inhalt der Tabelle setzen
+
+Der Inhalt der Tabelle wird über den 'content' Parameter bestimmt. Hier soll ein Array von <\tr> Elementen
+übergeben werden, jede bildet eine Zeile der Tabelle
+
+Ein Beispiel hierfür:
+
+    content = [
+        <tr>
+            <td>first cell</td>
+            <td>another cell</td>
+        </tr>,
+    ]
+
+    <ContentTable content={content}>
+
+erzeugt folgende Komponente:
+
+<Preview>
+  <Story name="only content">
+    <ContentTable content={content} />
+  </Story>
+</Preview>
+
+## Die Spaltenüberschriften setzen
+
+Ähnlich zu dem Inhalt der Tabelle werden die Spaltenüberschriften über den Parameter 'header' gesetzt.
+Hier wird ein Array<\string> erwartet. Ein Beispiel hierfür ist folgendes:
+
+    let headers = [
+        "first header",
+        "second header"
+    ]
+
+    <ContentTable headers={headers} />
+
+Hieraus wird folgende Komponente erzeugt:
+
+<Preview>
+  <Story name="only headers">
+    <ContentTable headers={headers} />
+  </Story>
+</Preview>
+
+## Interaktivität
+
+Die Tabelle kann "interaktiv" gemacht werden. Dies bedeutet, dass sie auf Mouse-Over events mit Highlighting reagiert.
+Hierfür dient der Parameter 'hover'
+
+    <ContentTable content={content} headers={headers} hover={true} />
+
+erzeugt folgende Komponente:
+
+<Preview>
+  <Story name="Interactive">
+    <ContentTable headers={headers} content={content} hover={true} />
+  </Story>
+</Preview>

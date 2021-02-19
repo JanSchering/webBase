@@ -1,0 +1,35 @@
+.webdoc > h3,
+h2,
+h1,
+.h1,
+.h2 .h3 {
+  width: auto;
+  align-self: inherit;
+}
+
+.webdoc > p,
+.p {
+  width: auto;
+  align-self: inherit;
+  font-size: 1.5rem;
+}
+
+.webdoc {
+  color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  padding-top: 5%;
+  width: 58%;
+  min-height: 100%;
+  margin-left: 21%;
+  margin-right: 21%;
+  background-size: 'cover';
+  background-repeat: 'no-repeat';
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(77, 77, 87, 0.8) 50%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.gridLayout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

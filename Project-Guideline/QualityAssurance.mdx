@@ -1,0 +1,47 @@
+## Quality Assurance Konzept
+
+Für produktive Software in einem Unternehmensumfeld ist es unerlässlich, sicherzustellen dass alle Anwendungen einem gewissen Qualitätsstandard entsprechen. Dies gilt für Anwendungen die Unternehmens-intern Anwendung finden und in besonderem Maße Anwendungen, welche eine externe Schnittstelle für Kunden/Geschäftspartner zum Unternehmen darstellen. Eine Anwendung von schlechter Qualität senkt das Vertrauen der Partner in das Unternehmen nicht nur in diesem spezifischen Bereich, sondern in das Unternehmen im Allgemeinen. Bspw. ein Unternehmen, welches für eine Preisberechnung eine Anwendung nutzt, welche ständig falsche Werte liefert, die korrigiert werden müssen. Dem Partner muss wiederholt kommuniziert werden dass Fehler bei der Berechnung aufgetreten sind. Das Vertrauen dieses Partners in die Dienstleistung des Unternehmens wird entsprechend sinken ("_Die schaffen es ja nicht einmal den Preis zu berechnen_"). Die Wahrscheinlichkeit steigt, dass sich der Partner schlicht ein anderes Unternehmen sucht.
+
+Oberflächen nehmen hier eine besondere Position ein, da sie auf zwei Arten qualitativ gesichert werden müssen. Zunächst muss sichergestellt werden, dass die Funktionalität der Oberfläche dem Qualitätsstandard (QS) entspricht. Dies ist ein wichtiger Part, reicht jedoch im Fall von Oberflächen-Anwendung nicht zur Kundenbindung und Gewinnung des Vertrauen von Partnern (oder auch Mitarbeitern bei internen Anwendungen ) aus. Eine Oberfläche, welche zwar alle FUnktionalitäten bietet und diese Qualitativ einwandfrei ausführt wird trotzdem sehr negativ aufgenommen, wenn sie:
+
+- nicht die Erwartungen an die Anwendung erfüllt
+- unübersichtlich ist
+- das Design nicht ansprechend ist
+
+Diese Punkte werden unter **User Experience** zusammengefasst.
+
+Im Fall der Anwendung bedeutet dies, dass zwei Aspekte in der QA betrachtet werden müssen:
+
+- **Functionality**
+- **User Experience**
+
+Die folgenden Abschnitte stellen ein Konzept zur Sicherstellung der Qualität dieser Aspekte dar.
+
+### Code Reviews
+
+**Kategorie:** Functionality, User Experience
+
+Bei der kollaborativen Entwicklung einer Anwendung muss sichergestellt werden, dass die Anwendung einem gewissen Qualitätsstandard entspricht. Code-Reviews sind ein effektives und wichtiges Mittel für Quality-Assurance (QA) in Entwicklungsteams. Dieses Kapitel erläutert das Prinzip der Code-Reviews, deren Hintergrund und Vorteile. Zusätzlich wird eine Guideline für das Durchführen von Code-Reviews gegeben.
+
+#### Was ist ein Code-Review
+
+In einem Code-Review werden fertig implementierte Änderungen am bestehenden Code betrachtet. An der Betrachtung nehmen die an der Implementierung beteiligten Entwickler sowie ein- oder mehrere unbeteiligte Entwickler teil. Die Implementierung wird von den beteiligten Entwicklern erläutert und von den unbeteiligten Entwicklern auf Richtigkeit und Vollständigkeit geprüft. Ebenfalls wird geprüft, ob die Implementierung den Qualitätsstandards entspricht und den Best-Practices des Projektes folgt.
+Anmerkungen werden gemeinsam besprochen. Gibt es Änderungsbedarf, so können die Änderungen abhängig von der Größe entweder innerhalb des Reviews vorgenommen werden, oder aber von den beteiligten Entwicklern im Nachgang implementiert werden. **NOTE** Letzteres erfordert ein neues Code-Review!
+
+#### Warum Code-Reviews
+
+Code Reviews bilden einen wichtigen Schritt in der Qualitätssicherung von Anwendungen. Auf dem vier Augen Prinzip beruhend lässt sich leicht vorstellen warum ein Review nach fertig gestellet Implementierung hilfreich sein kann.
+
+- Fehler finden
+  Gerade wenn ein Entwickler alleine an einem Abschnitt arbeitet der eine gewisse Komplexität beinhaltet kann es schnell passieren dass sich ein Fehler einschleicht und schlicht übersehen wird. Je länger man an dem entsprechenden Abschnitt arbeitet, desto weniger achtsam wird die Entwicklung da man den Bereich in dem man sich bewegt (vermeintlich) gut kennt. Unabhängige Entwickler haben im Review die Möglichkeit die entsprechenden Abschnitte unvoreingenommen zu betrachten und haben dadurch eine wesentlich höhere Chance Fehler zu erkennen
+
+- Optimierung
+  Selbst wenn der implementierte Part die gewünschte Funktionalität fehlerfrei liefert muss dies in einigen Fällen nicht zwangsläufig bedeuten, dass sie den Qualitätsansprüchen entspricht. Bei der Arbeit an einer Funktion passiert es schnell, dass man sich auf einen gefundenen Lösungsansatz versteift und mögliche andere (evtl. wesentlich effizientere) Wege nicht mehr in Betracht zieht. Der unabhängige Entwickler kann diesen Schritt zurück machen und Vorschläge zur Optimierung anbieten.
+
+- Einhaltung Coding Best Practices
+  Bei längerer Arbeit an einem Abschnitt kann es passieren, gerade nachdem man bereits mehrere Ansätze getestet hat, dass die Best Practices und Coding Guidelines aus den Augen verloren werden. Das Code-Review stellt sicher, dass die Erweiterung den Standards folgt
+
+- Diskurs
+  Abschließend bietet ein Code-Review dem Entwickler selbst die Möglichkeit seine Implementierung vorzustellen und zu beschreiben. Dem Rubberduck-Prinzip folgend ist dies eine effektive Möglichkeit wie der Entwickler selbst mglw. auf Verbesserungen und Fehler stößt
+
+#### Code-Review-Guideline

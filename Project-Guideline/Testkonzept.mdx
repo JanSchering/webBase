@@ -1,0 +1,145 @@
+## Testkonzept
+
+In Diesem Kapitel wird das Testkonzept für Web Anwendungen beschrieben. Die einzelnen Sektionen beschreiben jeweilige Ebenen von Tests, angefangen bei Unit Tests, über Integrationstests, bis zu End-to-End testing.
+
+### Unit-Testing
+
+Die Unit-Tests sind analog der FOP orientierten Anwendungsstruktur in hierarchische Ebenen unterteilt
+(Layered Functionality Testing). Dies bedeutet, dass die verschiedenen Ebenen, denen Prozesse zugeordnet
+sind abgekapselt von der Funktionalität höherer oder tieferer Schichten getestet werden. Das Framework, in
+welchem die Tests geschrieben sind, ist jest. Jest bietet die Möglichkeit React Komponenten sowohl auf ihre
+Funktionalität, als auch ihr Verhalten im Browser zu testen, ohne dafür.
+
+Beispiel:
+
+    P = () => {
+        a = ... //interner Prozessschritt
+        ...
+        ...
+        b = ... // weiterer Prozessschritt
+        ...
+        ...
+        return (
+            <div>
+                <P_Sub parameter={P_a, ...} />
+                <P_Sub parameter={P_b, ...}>
+            </div>
+        )
+    }
+
+    P_Sub = (props) => {
+        {a, b, c, d...} = props;
+        c = atomicFunction(a, b)
+        d = atomicFunction(c, d)
+
+        return (
+            <div>
+                <div>
+                    {c}
+                </div>
+                <div>
+                    {d}
+                </div>
+            </div>
+        )
+    }
+
+    atomicFunction {
+        {param1, param2} = params;
+
+        result = ... // computing the process result with the given paramters
+
+        return result
+    }
+
+Functional Component **P** ist eine beispielhafte Abbildung eines übergeordneten Prozess. Teil dieses Prozesses
+Ist es, die Komponente _P_Sub_ 2 mal aufzurufen, jeweils mit unterschiedlichen Parametern.
+Dies bedeutet dass P_Sub dem Prozess P hierarchisch **untergeordnet** (ein
+Sub-Prozess) ist.
+
+==> Die Oberste Testebene sollte daher abgedeckt werden durch eine Testreihe
+
+- P.test.tsx
+
+
+    _P.test.tsx_
+
+    let mockLowerLayers = mock(P_Sub)
+
+    it("calls mockLowerLayers with a", () => {
+    ...
+    })
+
+    it("calls mockLowerLayers with b", () => {
+    ...
+    })
+
+Die Abbildung des Subprozesses **P_Sub** wiederum verwendet den Prozess \_atomicFunction\_
+als Sub-Prozess. atomicFunction ist hierarchisch somit P*Sub untergeordnet. Zum Testen wird also
+zunächst eine neue Testreihe benötigt, welche die Funktionalität von P_Sub sicherstellt, **unabhängig**
+davon ob \_atomicFunction* funktioniert.
+
+- P_sub.test.tsx
+
+
+    _P_Sub.test.tsx_
+
+    let mockLowerLayers = mock(atomicFunction)
+
+    let testProps = ({...args})
+
+    it("calls mockLowerLayers with (testProps.a, testProps.b) ", () => {
+    ...
+    })
+
+    it("renders the result of the first call", () => {
+    ...
+    })
+
+    it("calls mockLowerLayers with (testProps.c, testProps.d", () => {
+    ...
+    })
+
+    it("renders the result of the second call", () => {
+    ...
+    })
+
+**atomicFunction** braucht für die Abbildung seines Prozesses **keine** Sub-Prozesse, es handelt
+sich also um eine elementare/atomare Funktion. Diese Atomare kann nun ebenfalls getestet werden.
+
+- atomicFunction.test.tsx
+
+
+    _atomicFunction.test.tsx_
+
+    let testParams = ...
+
+    it("returns the correct result when called with testParams", () => {
+    ...
+    })
+
+    ...
+
+Die Funktionalität jeder Ebene für sich ist somit durch die Tests abgedeckt. In den
+meissten Fällen bedeutet dies, dass auch die Komposition der Komponenten funktioniert,
+dies sollte jedoch durch Integrationstests sichergestellt werden.
+
+## Zusammenfassung
+
+Der Prozess P besteht also aus 3 Prozess Ebenen: P, P_Sub und atomicFunction.
+
+Layered Testing geht für die Sicherstellung der FUnktionalität der Anwendung wie folgt vor:
+
+1. Testen der atomaren Funktionen
+   ==> Zuerst werden mit Unit-Tests die Funktionalität der atomaren Funktionen sichergestellt.
+
+2. Testen der übergeordneten Schicht
+   ==> Nachdem die Funktionalität der atomaren Schicht sichergestellt ist kann die nächst höhere
+   Prozessebene problemlos getestet werden. Hierfür werden die atomaren Funktionen durch Mocks
+   ersetzt. Dies stellt sicher, dass **nur** die Funktionalität der Ebene getestet wird und keine
+   Abhängigkeit zur Funktionalität der tieferen Ebene besteht, da diese bereits getestet ist.
+
+3. Wiederholen von 2. bis zur obersten Ebene
+   ==> Das Vorgehen in 2. kann nun für jede Ebene des Prozesses wiederholt werden. Die verwendeten
+   Sub-Prozesse der Ebene werden jeweils durch Mocks ersetzt und die Funktionalität der Ebene
+   isoliert getestet.

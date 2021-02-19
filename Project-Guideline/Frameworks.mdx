@@ -1,0 +1,60 @@
+## Framework Overview
+
+In diesem Kapitel wird ein Überblick über die verwendeten Bibliotheken und Technologien innerhalb der Anwendung geschaffen.
+
+### React-Typescript
+
+Die Javascript-Komponenten, welche in Komposition die Frontend Anwendung bilden sind in React-Typescript geschrieben.
+
+#### Typescript
+
+Typescript ist ein Framework, das die Typisierung von Javascript-Code ermöglicht. Sowohl Variablen, als auch Funktionen/Rückgabewerte und Klassen können durch Typescript typisiert werden. Typescript erhöht hierdurch zum Einen die Übersichtlichkeit des Codes, zum Anderen bietet es die Möglichkeit Typ-Sicherheit innerhalb des Javascript Codes aufzubauen und die Anwendung dadurch robuster zu machen.
+
+#### React
+
+React ist ein Framework, welches das schreiben von Javascript-Komponenten in ES6-JSX Syntax ermöglicht. Dies hat mehrere Vorteile gegenüber reinem Javascript:
+
+-Lesbarkeit der Komponenten
+=> Oberflächen-Komponenten haben als Ziel Oberflächen-Elemente zu produzieren, welche um Funktionalität angereichert sind.
+Sie unterscheiden sich daher fundamental zu HTML nur in den Funktionen. JSX-Syntax ermöglicht es Komponenten in HTML-ähnlicher Syntax zu schreiben und zu verwenden. trennt man also die Funktionalität von den Elementen bietet JSX-Syntax die Möglichkeit Komponenten wesentlich übersichtlicher und einfacher verständlich in HTML-Syntax zu schreiben. Diese Syntax ermöglicht intuitives Erfassen, was der Code produzieren möchte. Bsp.:
+
+    <InteractiveTable>
+        <Head />
+        <Body />
+    </InteractiveTable>
+
+export const test = 'test';
+
+<div>{test}</div>
+
+lässt den Leser des Codes intuitiv erfassen, das hier eine Interaktive Tabelle erzeugt werden soll welche einen _Head_ und einen Körper hat.
+
+#### React und Typescript als Kombination
+
+Kombiniert man die Übersichtlichkeit von React und die Typ-Sicherheit von Typescript, erhält man eine robuste und übersichtliche Anwendungsstruktur.
+
+### React-Bootstrap
+
+React-Bootstrap ist eine Komponenten-Bibliothek. Sie bietet vorgefertigte React Oberflächen-Komponenten, welche in Projekte importiert und verwendet werden können. Diese Komponenten verfügen bereits sowohl über Funktionalität, als auch über ein Stylesheet, welches ihr Aussehen bestimmt. SOwohl FUnktion als auch Aussehen können in dem jeweiligen Projekt, in welchem die Komponenten Anwendung finden erweitert oder auch komplett ausgetauscht werden.
+
+### Jest
+
+Jest ist ein Framework, welches das Unit-Testing von Javascript-Code ermöglicht.
+
+### enzyme
+
+Enzyme ist eine Bibliothek, welche Funktionen bereitstellt um das Testen von Funktionen mit Jest zu vereinfachen.
+
+### webpack
+
+Webpack ist ein Bundling-Tool, welches Code kompiliert, transpiliert und gebündelt zur Verfügung stellt.
+
+### express
+
+Express ist ein einfaches und flexibles Node.js-Framework von Webanwendungen, das Features und Funktionen für Webanwendungen und mobile Anwendungen bereitstellt.
+
+Express bietet eine Thin-Layer-Ebene mit grundlegenden Webanwendungsfunktionen, ohne Node.js-Features zu überlagern.
+
+### npm
+
+npm selbst ist ein Paket Manager für die Node.js Laufzeitumgebung. die npm Registry ist ein Open Source Repository.

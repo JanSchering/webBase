@@ -1,0 +1,141 @@
+## Best Practices (Entwicklungsguideline)
+
+In diesem Kapitel wird ein grundsätzlicher Leitfaden für die Entwicklung neuer Typescript Komponenten/ der Bearbeitung der bereits vorhandenen Komponenten aufgebaut.
+
+### Function-Oriented Programming
+
+Die Anwendung ist nach dem Function-Oriented Programming Paradigma (FOP) implementiert. Um ein besseres Verständnis für FOP zu gewinnen wird zunächst das übliche Objektorientierte Paradigma betrachtet und dann dem FOP gegenüber gestellt.
+
+Object-Oriented Programming (OOP) basiert auf der Idee, dass eine Business-Logik (bzw. global betrachtet die ganze Welt) aus Objekten besteht, welche über Funktionen und Attribute verfügen. Ein Prozess ergibt sich aus der Interaktion zweier Objekte. So ist bspw. in der realen Welt das Schreiben eine Interaktion zwischen einem Menschen-Objekt mit Han-Attribut und motorischer Funktion, einem Stift-Objekt mit Attribut Stift-Spitze und einem Papier-Objekt mit einem Oberflächen-Attribut. Die Interaktion bearbeitet die Attribute der Objekte, war die Papier-Oberfläche vor dem Schreiben vollständig weiß, sind nach dem Schreiben bestimmte Koordinaten mit Farbe befüllt.
+
+FOP geht im Gegensatz dazu davon aus, dass Funktionen nicht Teil eines Objektes sein müssen. In FOP sind Funktionen die Abbildungen eines in sich abgeschlossenen/atomaren Prozesses, welcher bestimmte Teilnehmer beinhaltet. So ist Schreiben in FOP Ein Prozess, welcher ein beschriebenes Papier zurückliefert.
+Der Hauptunterschied ist also, dass Funktionen nicht Attribut eines Objektes sind, sondern ein eigenständiger Prozess der ein Ergebnis liefert, welches wiederum für andere Prozesse verwendet werden kann.
+
+Ein Business-Prozess setzt sich aus der Komposition von atomaren Prozessen und deren Ergebnissen zusammen.
+
+### Funktionen statt Klassen
+
+Die Verwendung des FOP Paradigma impliziert Best-Practices für die Implementierung
+neuer Funktionalitäten innerhalb der Anwendung. Klassen-Komponenten in React
+sind ein rein Syntaktisches Mittel zur Abbildung einer OOP-Logik. Dies ist innerhalb von
+FOP nicht notwendig und in den meisten Fällen irreführend. Statt Klassen-Komponenten sollten
+Functional-Components verwendet werden. Diese dienen FOP-orientiert der Komposition atomarer
+Funktionen mit der Möglichkeit den lokalen Status des Prozesses zu speichern
+(React-Hooks: useState, setState, useEffect, etc.).
+
+#### Beispiel: Class Component -- Functional Component in React
+
+Im folgenden betrachten wir ein Beispiel einer React-Komponente, welche zunächst als
+Class-Komponente und anschließend als Functional-Komponente implementiert ist.
+
+Als Class-Component:
+
+    class Tooltip extends React.Component< Props, State> {
+        constructor(props) {
+            super(props);
+            this.state = {
+                toggled: false
+            }
+        }
+
+        const handleClick = () =  {
+            this.setState({toggle: !toggle});
+        }
+
+        render() {
+            const {symbol = ?, text} = this.props;
+
+            return (
+                <React.Fragment>
+                    <a onClick={handleClick}>{symbol}</a>
+                    {toggled ? <p>text</p> : <></>}
+                </React.Fragment>
+            )
+        }
+    }
+
+erzeugt folgenden Output:
+
+import Class_Example from './Best-Practices/Class_Example.tsx';
+
+<div>
+  <Class_Example symbol="This is a Class Component" text="Beispieltext" />
+</div>
+
+Als Functional Component:
+
+    const Tooltip = (symbol, text) => {
+        const [toggled, setToggled] = useState(false);
+
+        return (
+            <React.Fragment>
+                <a onClick={() => setToggled(!toggled)}>{symbol}</a>
+                {toggled ? <p>text</p> : <></>}
+            </React.Fragment>
+        )
+    }
+
+erzeugt folgenden Output:
+
+import Functional_Example from './Best-Practices/Functional_Example.tsx';
+
+<div>
+  <Functional_Example symbol="This is a Functional Component" text="Beispieltext" />
+</div>
+
+### Modularisierung
+
+Auch in FOP ist Modularisierung ein wichtiger Teil für Lesbarkeit, Wiederverwendbarkeit und Maintenance. Der Grund hierfür ist, das eine klare Abtrennung der Funktionalitäten in dedizierte Funktionen viele Vorteile für die genannten Kategorien bietet. Eine Funktion _write()_ ist bspw. vielseitig verwendbar und es liegt nicht fern, diese Funktion in verschiedensten Situationen wieder zu verwenden. Hat man jedoch stattdessen nur eine Funktion _writePrintAndSendMailToUser()_ so ist es offensichtlich, dass diese bereits in wesentlich weniger Fällen erneut verwenden können.
+
+**Je mehr Funktionalität zusammengefasst wird, desto spezifischer wird der Anwendungsfall**
+
+Das selbe Prinzip lässt sich auch auf die React-JSX Komponenten übertragen. Eine Komponente _<\Jumbotron />_ hat eine wesentlich generellere Anwendbarkeit als _<\JumbotronWithLoginFormulaAndContactBox />_.
+
+In beiden Fällen liegt es an den Entwicklern zu beurteilen wie weit Funktionen generalisiert/abstrahiert werden können und ob es andere mögliche Anwendungsszenarien gibt, in welchen die Komponenten/Funktionen zum Einsatz kommen
+
+### Typ-Sicherheit
+
+Einer der größten Vorteile der Nutzung von Typescript ist die Möglichkeit der Typisierung von Javascript-Code. Innerhalb der Anwendung wird Typisierung für Komponenten, Rückgabewerte und Parameter von Funktionen, sowie Variablen genutzt.
+
+#### Warum Typisierung
+
+Typisierung verursacht overhead im Code und zusätzlichen Aufwand bei der Implementierung. Dieser muss durch offensichtlichen Nutzen gerechtfertigt werden.
+
+- Typisierung erhöht die Robustheit der Anwendung:
+  Die Robustheit der Anwendung wird aus zwei Gründen erhöht. Zum einen vermeidet Typ-Sicherheit Fehlerhafte Type-Conversions, dadurch dass bspw. ein string an einer Stelle übergeben wird an der eine Zahl benötigt wird. Zum Anderen zwingt die Angabe von Typen den Entwickler den Datenfluss der Anwendung genauer zu überdenken. Dies vermeidet Flüchtigkeitsfehler.
+
+- Erhöhte Lesbarkeit/ erleichtertes Verständnis
+  Konsistente Typisierung erhöht in vielen Fällen die Lesbarkeit der Anwendung und erleichtert das Verständnis der vorliegenden Funktionalität. In Funktionen bspw. macht die Typisierung der Parameter und des Rückgabewertes auf den ersten Blick ersichtlich was genau die Funktion erwartet und was am Schluß dabei rauskommt. In komplexeren Funktionen mit einer Vielzahl Variablen wird schnell unklar, bei welcher Variable es sich eigentlich um was handelt, selbst bei sprechender Benennung. In Projekten ohne Typisierung neigen Entwickler hier bereits organisch dazu diesem entgegen zu wirken indem sie eine Pseudo-Typisierung durch die Benamung der Variable vornehmen (prominentes bsp. idArray = ...). Dies führt sehr schnell zu sehr verbosen Namen die noch unverständlicher als zuvor sind (bsp. indiceAsArrayOfStrings). die Typisierung erlaubt eine einfach Benamung bei der die Art der Variable weiterhin ersichtlich bleibt.
+
+**Note:** Selbiges Benamungsproblem gilt im Übrigen auch für Funktionen, Beispiel:
+
+    function CreateArrayOfJsxElementsFromStringArray(strings) {...}
+    ...
+    ...
+    result = CreateArrayOfJsxElementsFromStringArray(myArray);
+
+typisiert
+
+    function CreateElements(data: Array< string >): Array< JSX.Element> {...}
+    ...
+    ...
+    result = CreateElements(myData)
+
+- Typisierung ist Teil der Dokumentation
+  Ein weiteres Problem von Anwendungen ohne Typisierung ergibt sich implizit aus der Benamungs-und Verständnis-Problematik die im vorherigen Punkt betrachtet wurde. **Code der von Anfang an schwerer verständlich ist wird mit der Zeit nicht einfacher zu verstehen!** Kann man während der aktiven Arbeit an einem Teil der Anwendung und für einen gewissen Zeitraum danach noch rekonstruieren wofür eine Variable da ist oder was genau eine Funktion zurück liefern soll, so ist dies wahrscheinlich nach wenigen Monaten bereits nurnoch in einem Bruchteil der Fälle möglich. Die Typisierung dient auch dazu, den Code für die Zukunft zu dokumentieren.
+
+### Überfüssige Abhängigkeiten vermeiden
+
+Einer der größten Vorteile von React, bzw. Javascript im allgemeinen in Kombination mit npm sind die Vielzahl der Erweiterungen, welche auf einfache Weise über den Paket Manager installiert und genutzt werden können. Das npm Repository bietet durch die Leistungen der Community für so gut wie jede erdenkliche Funktionalität eine Erweiterung.
+
+Diese Freiheit hat jedoch nicht nur Vorteile. Das Installieren externer Pakete erzeugt Abhängigkeiten. Nicht nur zu dem jeweiligen Paket selbst, diese Pakete haben ebenfalls wieder Abhängigkeiten zu anderen Paketen, welche mglw. wieder Abhängigkeiten haben. Es ist leicht ersichtlich dass dies theoretisch gegen unendlich so weiter gehen kann. Jede Abhängigkeit bringt Folgen mit sich:
+
+#### Fehleranfälligkeit & Gefahr unerwünschter Effekte steigen
+
+Die Abhängigkeit zu einem externen Paket bedeutet darauf angewiesen zu sein, dass dieses konsistent so funktioniert wie es soll. Hierauf hat man keinerlei Einfluss. Steigt ein Paket nun bspw. auf eine neue Version um die nicht mehr mit der Anwendung kompatibel ist, kommt es zu Fehlern. Ebenfalls könnte es passieren, dass ein Paket ein update erhält durch welches es schlicht fehlerhaft wird, was ebenfalls wiederum in der eigenen Anwendung Fehler verursacht.
+
+Zwar muss nicht immer der Extremfall des Fehlers auftreten, jedoch kann es bei updates der Paketen auch zu unerwünschten Nebeneffekten kommen. Möglicherweise wurde eine Benamung verändert welche man bisher verwendet hatte (titel => title als simples Bsp.). Dies sorgt dafür, dass sich die Anwendung an manchen Stellen nicht so verhält wie gewünscht.
+
+#### Wartungsaufwand steigt
+
+Zusammen mit den Abhängigkeiten führt man das Problem ein, diese mit der eigenen Anwendung kompatibel zu halten. Steigt ein Paket auf eine neue Version um (Bootstrap 4.x => Bootstrap 5.x) muss Migrations-Aufwand betrieben werden um sicherzustellen, dass die eigene Anwendung weiterhin mit dem Paket kompatibel ist. Je mehr Abhängigkeiten vorhanden sind, desto mehr Aufwand muss betrieben werden diese aktuell und kompatibel zu halten

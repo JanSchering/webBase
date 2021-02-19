@@ -1,0 +1,72 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import { checkA11y } from '@storybook/addon-a11y';
+import TreeNode from '../../src/components/treeStructure/treeNode';
+
+<Meta title="TreeNodeMDX" component={TreeNode} />
+
+export let testLabel = <span>Dies ist ein Label für einen Knoten einer Baumstruktur</span>;
+
+export let testChildString = 'Dies ist der Inhalt des Knotens';
+
+export let testChildren = [<span>first child</span>, <span>second child</span>];
+
+# TreeNode 
+
+In diesem Abschnitt wird die Verwendung von TreeNode- Komponenten beschrieben.
+Eine TreeNode sieht grundlegend wie folgend aus:
+
+<Story name="TreeNode with String as child" addon={checkA11y}>
+  <TreeNode nodeLabel={testLabel} isChildPrimitive={true} onClick={() => {}} collapsed={true}>
+      {testChildString}
+    </TreeNode>
+</Story>
+
+<br/>
+
+## TreeNodes mit mehreren Child-Komponenten
+
+Eine TreeNode kann mehrere Child-Elemente haben. Diese werden in der Baumstruktur um eine Ebene eingerückt angezeigt.
+Ein Beispiel hierfür ist: 
+
+    let testChildren = [
+        <span>first child</span>,
+        <span>second child</span>
+    ]    
+
+    <TreeNode isChildPrimitive={false} onClick{() => {}} collapsed={false}>
+        {testChildren}
+    </TreeNode>
+
+liefert folgende Komponente zurück: 
+
+<Preview>
+    <Story name="TreeNode with multiple Children">
+        <TreeNode nodeLabel={testLabel} isChildPrimitive={false} onClick={() => {}} collapsed={false}>
+            {testChildren}
+        </TreeNode>
+    </Story>
+</Preview>
+
+## Baumstruktur
+
+Eine der wichtigsten Funktionalitäten der TreeNode ist die Möglichkeit, weitere TreeNodes als Children zu übergeben.
+Hieraus entsteht eine Baumstruktur mit mehreren Ebenen. Ein Beispiel hierfür ist folgendes:
+
+export let testTreeStructure = [
+  <TreeNode nodeLabel={testLabel} isChildPrimitive={false} onClick={() => {}} collapsed={false}>
+    {testChildren}
+  </TreeNode>,
+  <TreeNode nodeLabel={testLabel} isChildPrimitive={false} onClick={() => {}} collapsed={false}>
+    {testChildString}
+  </TreeNode>,
+];
+
+<Preview>
+    <Story name="Nested TreeNodes">
+        <TreeNode nodeLabel={testLabel} isChildPrimitive={false} onClick={() => {}} collapsed={false}>
+            {testTreeStructure}
+        </TreeNode>
+    </Story>
+</Preview>
+
+

@@ -1,0 +1,52 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import { checkA11y } from '@storybook/addon-a11y';
+import HierarchicalTree from '../../src/components/treeStructure/hierarchicalTree';
+
+<Meta title="TreeStructures" component={HierarchicalTree} />
+
+# HierarchicalTree
+
+In diesem Abschnitt wird die Verwendung der HierarchicalTree-Komponente beschrieben. Ein einfaches
+Beispiel für eine Baumstruktur ist:
+
+export const testObjekt = {
+  title: 'a',
+  content: {
+    subtitle: 'b',
+    subStructure: {
+      content: 'c',
+    },
+  },
+};
+
+<Preview>{HierarchicalTree(testObjekt)}</Preview>
+
+## Beschreibung
+
+HierarchicalTree ist eine Komponente zur Darstellung von Baumstrukturen. Dies kann
+hilfreich sein um den Aufbau und Inhalt eines Objektes darzustellen, da JSON-Objekte
+ebenfalls Baumstrukturen sind.
+
+## Verwendung
+
+Um die Baumstruktur zu verwenden reicht es das Objekt, welches dargestellt werden soll,
+als Parameter zu übergeben. Als Beispiel wird folgender Code zum aufrufen der
+Baumstruktur verwendet:
+
+    const testObjekt = {
+        title: 'a',
+        content: {
+            subtitle: 'b',
+            subStructure: {
+                content: 'c',
+            },
+        },
+    };
+
+    <div>{HierarchicalTree(testObjekt)}</div>
+
+Der Aufruf erzeugt folgendes Oberflächen-Element:
+
+<Preview>
+  <Story name="Basic Example">{HierarchicalTree(testObjekt)}</Story>
+</Preview>
