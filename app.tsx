@@ -5,6 +5,7 @@ import LoginPage from './shared/components/login/loginForm';
 import { history } from './Routing/utilities/history';
 import Home from './src/pages/Home.mdx';
 import Projects from './src/pages/Projects.mdx';
+import LinReg from './src/pages/LinReg.mdx'
 import SharedImages from './shared/images/imgIndex';
 import Navbar from './shared/components/navbar';
 
@@ -30,7 +31,7 @@ const App = () => {
             <Route exact path="/login">
               <LoginPage />
             </Route>
-            {/*<Route path="/intro" component={ } /> */}
+            <Route path="/intro" component={LinReg} />
             <Route path="/projects" component={Projects} />
             <Route exact path="/" component={Home} />
             {/*<PrivateRoute component={MDXDocument} /> */}

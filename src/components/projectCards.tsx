@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBIcon } from 'mdbreact';
-import LinRegImg from '../../git-submodule-linReg/LInearRegWeb/images/LinReg.png';
+import SharedImages from '../../shared/images/imgIndex'
 
 /**
  * @description Creates a MDBCard for every Project. The Cards contain a picture/snippet of the project, a short description
@@ -12,7 +12,7 @@ const ProjectCards = (): JSX.Element => {
     <MDBRow>
       <MDBCol md="2">
         <MDBCard>
-          <MDBCardImage top src={LinRegImg} overlay="white-slight" hover waves alt="MDBCard image cap" />
+          <MDBCardImage top src={SharedImages.LinRegGraphic} overlay="white-slight" hover waves alt="MDBCard image cap" />
           <MDBCardBody className="elegant-color white-text rounded-bottom">
             <MDBCardTitle>Linear Regression</MDBCardTitle>
             <hr className="hr-light" />
